@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Hard. Win Big.</title>
+
+    <style>
+        :root {
+            --dark: #111202;
+            --gold: #e7ec4c;
+            --cream: #0d0e0d;
+            --green: #11a72a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--dark);
+            background: var(--cream);
+        }
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 16px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            
+            color: rgb(234, 230, 230);
+            text-align: left;
+            text-decoration: none;
+            font-size: 54px;
+            font-weight: 1000;
+            letter-spacing: 1px;
+        }
+        img{
+            border: solid rgb(29, 231, 3) 3px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 52px;
+            word-spacing: 50px;
+        }
+
+        nav a {
+            color: rgb(241, 229, 10);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        .hero {
+            min-height: 510px;
+            padding: 65px 5%;
+            background: linear-gradient(90deg, rgba(10,13,18,.98), rgba(10,13,18,.45)),
+            url("sp bg.jpg") center/cover;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 620px;
+            color: white;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(48px, 7vw, 86px);
+            line-height: .96;
+            margin-bottom: 23px;
+        }
+
+        .hero-text h1 span {
+            color: var(--gold);
+        }
+
+        .hero-text p {
+            max-width: 500px;
+            color: #ececec;
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 25px;
+            border-radius: 7px;
+            background: var(--gold);
+            color: var(--dark);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: white;
+        }
+
+        section {
+            padding: 65px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #faf8f8;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #9a9898;
+            margin-bottom: 35px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            overflow: hidden;
+            background: rgb(24, 23, 23);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,.12);
+            transition: .25s;
+            border: black;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .card img {
+            display: block;
+            width: 320px;
+            height: 300px;
+            object-fit: cover;
+            border: black;
+        }
+
+        .card-info {
+            padding: 15px;
+            color: #e6e6e6;
+        }
+
+        .card h3 {
+            font-size: 17px;
+            min-height: 42px;
+        }
+
+        .brand {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .price {
+            color: var(--green);
+            font-size: 19px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .buy {
+            width: 100%;
+            border: 0;
+            border-radius: 5px;
+            padding: 10px;
+            color: white;
+            background: var(--dark);
+            background-color: #ff9411;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .buy:hover {
+            background: var(--green);
+        }
+
+        .about {
+            text-align: center;
+            background: #21a6e9;
+        }
+
+        .about p {
+            max-width: 760px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .contact {
+            text-align: center;
+            background: #f69a29;
+            line-height: 2;
+            
+        }
+
+        footer {
+            padding: 23px;
+            text-align: center;
+            background: var(--dark);
+            color: white;
+        }
+
+        @media (max-width: 1100px) {
+            .products {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero {
+                min-height: 450px;
+                text-align: center;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            section {
+                padding: 50px 6%;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Buy Now order popup */
+        .order-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,.75);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .order-box {
+            width: min(420px, 95%);
+            background: white;
+            color: #111;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.35);
+            position: relative;
+        }
+
+        .order-box h2 {
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .order-box p {
+            margin: 9px 0;
+        }
+
+        .order-box input {
+            width: 80px;
+            padding: 8px;
+            margin: 8px 0 12px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        .order-total {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0 18px;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-actions button {
+            flex: 1;
+            border: 0;
+            border-radius: 6px;
+            padding: 11px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .confirm-order {
+            background: #11a72a;
+            color: white;
+        }
+
+        .close-order {
+            background: #ddd;
+            color: #111;
+        }
+
+        .order-message {
+            display: none;
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 6px;
+            background: #e8f7ea;
+            color: #116b1f;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="logo.png" width="150" height="75">
+        <a class="logo" href="#home">V<span>-81</span> SPORTS</a>
+
+        <nav>
+            <a href="#home">Home</a>|
+            <a href="#products">Products</a>|
+            <a href="#about">About</a>|
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <h1>Play Hard.<br>Win <span>Big.</span></h1>
+
+                <p>
+                    Discover high-quality sports equipment made for passionate
+                    players, athletes, and future champions.
+                </p>
+
+                <a href="#products" class="btn">Shop Now →</a>
+            </div>
+        </section>
+
+        <section id="products">
+            <h2 class="section-title">Featured Sports Products</h2>
+            <p class="section-subtitle">
+                Everything you need to train, compete, and win.
+            </p>
+
+            <div class="products">
+                <article class="card">
+                    <img src="bat.jpg" width="300" height="320">
+                    <div class="card-info">
+                        <h3>MRF Cricket Bat</h3>
+                        <p class="brand">MRF</p>
+                        <p class="price">₹6,499</p>
+                        <button class="buy" data-product="MRF Cricket Bat" data-price="₹6,499">Buy Now</button>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="cricketkit.jpg">
+                    <div class="card-info">
+                        <h3>CRICKET KIT </h3>
+                        <p class="brand">DSC</p>
+                        <p class="price">₹10,999</p>
+                        <button class="buy" data-product="CRICKET KIT" data-price="₹10,999">Buy Now</button>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="bb.jpg">
+                    <div class="card-info">
+                        <h3>Badminton Racket</h3>
+                        <p class="brand">Yonex</p>
+                        <p class="price">₹1,499</p>
+                        <button class="buy" data-product="Badminton Racket" data-price="₹1,499">Buy Now</button>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="One8shoes.jpg">
+                    <div class="card-info">
+                        <h3>ONE8 Cover Drive Shoes</h3>
+                        <p class="brand">One8</p>
+                        <p class="price">₹13,499</p>
+                        <button class="buy" data-product="ONE8 Cover Drive Shoes" data-price="₹13,499">Buy Now</button>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="shuttlecock.jpg" >
+                    <div class="card-info">
+                        <h3>Shuttlecock</h3>
+                        <p class="brand">Casco</p>
+                        <p class="price">₹499</p>
+                        <button class="buy" data-product="Shuttlecock" data-price="₹499">Buy Now</button>
+                    </div>
+                </article>
+                <article class="card">
+                    <img src="volleyball.png">
+                    <div class="card-info">
+                        <h3>Volleyball</h3>
+                        <p class="brand">Casco</p>
+                        <p class="price">₹2599</p>
+                        <button class="buy" data-product="Volleyball" data-price="₹2599">Buy Now</button>
+                    </div>
+                </article>    
+                <article class="card">
+                    <img src="football.jpg">
+                    <div class="card-info">
+                        <h3>Professional Football</h3>
+                        <p class="brand">NIVIA</p>
+                        <p class="price">₹3399</p>
+                        <button class="buy" data-product="Professional Football" data-price="₹3399">Buy Now</button>
+                    </div>
+                </article>  
+                <article class="card">
+                    <img src="wrist&headband.jpg">
+                    <div class="card-info">
+                        <h3>wrist&weatband</h3>
+                        <p class="brand">Beatwide</p>
+                        <p class="price">₹499</p>
+                        <button class="buy" data-product="wrist&weatband" data-price="₹499">Buy Now</button>
+                    </div>
+                </article> 
+                <article class="card">
+                    <img src="ball.jpg">
+                    <div class="card-info">
+                        <h3>SG ball</h3>
+                        <p class="brand">SG</p>
+                        <p class="price">₹2099</p>
+                        <button class="buy" data-product="SG ball" data-price="₹2099">Buy Now</button>
+                    </div>
+                </article>                                                          
+                                <article class="card">
+                    <img src="footballshoes.jpg" >
+                    <div class="card-info">
+                        <h3>Football Shoes</h3>
+                        <p class="brand">Casco</p>
+                        <p class="price">₹4599</p>
+                        <button class="buy" data-product="Football Shoes" data-price="₹4599">Buy Now</button>
+                    </div>
+                </article> 
+                                <article class="card">
+                    <img src="runningspike.jpg" >
+                    <div class="card-info">
+                        <h3>Running Spike</h3>
+                        <p class="brand">PUMA</p>
+                        <p class="price">₹3399</p>
+                        <button class="buy" data-product="Running Spike" data-price="₹3399">Buy Now</button>
+                    </div>
+                </article> 
+                                <article class="card">
+                    <img src="rcb.jpg" >
+                    <div class="card-info">
+                        <h3>RCB jersey</h3>
+                        <p class="brand">RCB</p>
+                        <p class="price">₹599</p>
+                        <button class="buy" data-product="RCB jersey" data-price="₹599">Buy Now</button>
+                    </div>
+                </article> 
+                                <article class="card">
+                    <img src="jersey.jpg" alt="Football">
+                    <div class="card-info">
+                        <h3>Football jersey</h3>
+                        <p class="brand">7T7T</p>
+                        <p class="price">₹499</p>
+                        <button class="buy" data-product="Football jersey" data-price="₹499">Buy Now</button>
+                    </div>
+                </article> 
+                                <article class="card">
+                    <img src="badmintan.jpg" alt="Football">
+                    <div class="card-info">
+                        <h3>Badmintan bat with BAG</h3>
+                        <p class="brand">YONEX</p>
+                        <p class="price">₹1000</p>
+                        <button class="buy" data-product="Badmintan bat with BAG" data-price="₹1000">Buy Now</button>
+                    </div>
+                </article> 
+                                <article class="card">
+                    <img src="bag.jpg">
+                    <div class="card-info">
+                        <h3>sports bag & bottle</h3>
+                        <p class="brand">YONEX</p>
+                        <p class="price">₹1099</p>
+                        <button class="buy" data-product="sports bag & bottle" data-price="₹1099">Buy Now</button>
+                    </div>
+                </article> 
+                     <article class="card">
+                    <img src="glowes.jpg">
+                    <div class="card-info">
+                        <h3></h3>
+                        <p class="brand">kobo</p>
+                        <p class="price">₹1999</p>
+                        <button class="buy" data-product="" data-price="₹1999">Buy Now</button>
+                    </div>
+                </article> 
+                     <article class="card">
+                    <img src="kneecaps.jpg">
+                    <div class="card-info">
+                        <h3>sports kneecaps</h3>
+                        <p class="brand">Slovic</p>
+                        <p class="price">₹359</p>
+                        <button class="buy" data-product="sports kneecaps" data-price="₹359">Buy Now</button>
+                    </div>
+                </article> 
+                     <article class="card">
+                    <img src="caps.webp">
+                    <div class="card-info">
+                        <h3>cricket cap</h3>
+                        <p class="brand">7T7T</p>
+                        <p class="price">₹499</p>
+                        <button class="buy" data-product="cricket cap" data-price="₹499">Buy Now</button>
+                    </div>
+                </article> 
+                     <article class="card">
+                    <img src="xyz.webp">
+                    <div class="card-info">
+                        <h3>volleyball net</h3>
+                        <p class="brand">Casco</p>
+                        <p class="price">₹759</p>
+                        <button class="buy" data-product="volleyball net" data-price="₹759">Buy Now</button>
+                    </div>
+                </article> 
+                     <article class="card">
+                    <img src="trackpant.jpg">
+                    <div class="card-info">
+                        <h3>solid track pant</h3>
+                        <p class="brand">Adidas</p>
+                        <p class="price">₹699</p>
+                        <button class="buy" data-product="solid track pant" data-price="₹699">Buy Now</button>
+                    </div>
+                </article> 
+                
+
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <h2 class="section-title">About V-81 Sports</h2>
+
+            <p>
+                V-81 Sports is an online sports store where you can find cricket
+                kits, footballs, badminton equipment, sports shoes, jerseys, and
+                more. We provide quality sports products at affordable prices.
+            </p>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2 class="section-title">Contact Us</h2>
+            <p>📞 Phone: 7975747226</p>
+            <p>📧 Email: V-81sports@gmail.com</p>
+            <p>📍 Address: Karwar, Karnataka</p>
+        </section>
+    </main>
+
+    <footer>
+        © 2026 V-81 SPORTS | All Rights Reserved
+    </footer>
+
+    <!-- Buy Now Order Popup -->
+    <div class="order-modal" id="orderModal">
+        <div class="order-box">
+            <h2>Order Product</h2>
+            <p><strong>Product:</strong> <span id="orderProduct"></span></p>
+            <p><strong>Price:</strong> <span id="orderPrice"></span></p>
+
+            <label for="orderQuantity"><strong>Quantity:</strong></label><br>
+            <input type="number" id="orderQuantity" min="1" value="1">
+
+            <p class="order-total">Total: <span id="orderTotal"></span></p>
+
+            <div class="order-actions">
+                <button class="close-order" id="closeOrder">Close</button>
+                <button class="confirm-order" id="confirmOrder">Place Order</button>
+            </div>
+
+            <div class="order-message" id="orderMessage">
+                Order placed successfully! Thank you for shopping with V-81 Sports.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const orderModal = document.getElementById("orderModal");
+        const orderProduct = document.getElementById("orderProduct");
+        const orderPrice = document.getElementById("orderPrice");
+        const orderQuantity = document.getElementById("orderQuantity");
+        const orderTotal = document.getElementById("orderTotal");
+        const orderMessage = document.getElementById("orderMessage");
+        const closeOrder = document.getElementById("closeOrder");
+        const confirmOrder = document.getElementById("confirmOrder");
+
+        let selectedPrice = 0;
+
+        document.querySelectorAll(".buy").forEach(function(button) {
+            button.addEventListener("click", function() {
+                const product = this.dataset.product || "Selected Product";
+                const priceText = this.dataset.price || "₹0";
+                selectedPrice = Number(priceText.replace(/[^\d.]/g, "")) || 0;
+
+                orderProduct.textContent = product;
+                orderPrice.textContent = priceText;
+                orderQuantity.value = 1;
+                orderMessage.style.display = "none";
+                confirmOrder.style.display = "block";
+                updateTotal();
+
+                orderModal.style.display = "flex";
+            });
+        });
+
+        function updateTotal() {
+            const quantity = Math.max(1, Number(orderQuantity.value) || 1);
+            orderQuantity.value = quantity;
+            orderTotal.textContent = "₹" + (selectedPrice * quantity).toLocaleString("en-IN");
+        }
+
+        orderQuantity.addEventListener("input", updateTotal);
+
+        closeOrder.addEventListener("click", function() {
+            orderModal.style.display = "none";
+        });
+
+        confirmOrder.addEventListener("click", function() {
+            orderMessage.style.display = "block";
+            confirmOrder.style.display = "none";
+        });
+
+        orderModal.addEventListener("click", function(event) {
+            if (event.target === orderModal) {
+                orderModal.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+</html>
